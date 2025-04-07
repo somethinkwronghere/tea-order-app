@@ -14,7 +14,7 @@ app.config['SECRET_KEY'] = 'tea-order-secret-key'
 app.config['SESSION_PERMANENT'] = True  # Kalıcı oturum ayarı
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=90)  # 90 gün sürecek oturum
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", engineio_logger=False)
 
 # Constants
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
