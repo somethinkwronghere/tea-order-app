@@ -14,7 +14,7 @@ app.config['SECRET_KEY'] = 'tea-order-secret-key'
 app.config['SESSION_PERMANENT'] = True  # Kalıcı oturum ayarı
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=90)  # 90 gün sürecek oturum
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*", engineio_logger=False)
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading", engineio_logger=False)
 
 # Constants
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
@@ -1254,4 +1254,5 @@ if __name__ == '__main__':
     init_data_files()
     # Render uses PORT environment variable
     port = int(os.environ.get("PORT", 5000))
-    socketio.run(app, debug=False, host='0.0.0.0', port=port) 
+    # Use threading mode for compatibility with Python 3.11
+    socketio.run(app, debug=False, host='0.0.0.0', port=port, allow_unsafe_werkzeug=True) 
